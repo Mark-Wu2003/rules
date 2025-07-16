@@ -1,0 +1,97 @@
+# NAME: ChatGPT+TikTok (Mark Custom)
+# DESC: Consolidated from local inline rules + community snippets (OpenAI, Arkose, Stripe, Azure OpenAI edge endpoints, BlackMatrix7 TikTok globals).
+# BEHAVIOR: classical   # because we mix DOMAIN, DOMAIN-SUFFIX, DOMAIN-KEYWORD, PROCESS-NAME
+# UPDATED: 2025-07-17 (manual merge)
+
+payload:
+  # ===== OpenAI Core =====
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,oaistatic.com
+  - DOMAIN-SUFFIX,oaiusercontent.com
+  - DOMAIN,challenges.cloudflare.com           # Cloudflare challenge page; sometimes pops in login
+  - DOMAIN,auth0.openai.com                    # OpenAI Auth
+  - DOMAIN,policies.openai.com
+  - DOMAIN,temp.api.openai.com
+  - DOMAIN,staging.openai.com
+  - DOMAIN,billing.openai.com
+
+  # (Optional) broader matches – comment in if needed
+  # - DOMAIN-SUFFIX,ai.com                     # ai.com → ChatGPT redirect; may change regionally
+  # - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
+  # - DOMAIN-SUFFIX,arkoselabs.com             # global Arkose; broad
+  # - DOMAIN-SUFFIX,stripe.com                 # global Stripe; broad
+
+  # ===== OpenAI Aux infra / CDN / assets =====
+  - DOMAIN,openaiapi-site.azureedge.net
+  - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+  - DOMAIN,openaicomproductionae4b.blob.core.windows.net
+  - DOMAIN,production-openaicom-storage.azureedge.net
+  - DOMAIN-SUFFIX,x.ai              # Grok (xAI)
+  - DOMAIN-SUFFIX,grok.x.ai         # redundant; kept for clarity
+
+  # ===== Telemetry / Analytics used in ChatGPT =====
+  - DOMAIN-SUFFIX,browser-intake-datadoghq.com
+  - DOMAIN-SUFFIX,static.cloudflareinsights.com
+  - DOMAIN,api.statsig.com
+  - DOMAIN,events.statsigapi.net
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN-SUFFIX,segment.io
+  - DOMAIN,api-iam.intercom.io
+  - DOMAIN,nexus-websocket-a.intercom.io
+  - DOMAIN,nexus-websocket-b.intercom.io
+
+  # ===== Security / Human check =====
+  - DOMAIN,client-api.arkoselabs.com
+
+  # ===== Google static used in some ChatGPT flows =====
+  - DOMAIN-SUFFIX,t0.gstatic.com
+  - DOMAIN-SUFFIX,t1.gstatic.com
+  - DOMAIN-SUFFIX,t2.gstatic.com
+  - DOMAIN-SUFFIX,t3.gstatic.com
+
+  # ===== LiveKit (ChatGPT Voice / Realtime infra) =====
+  - DOMAIN-SUFFIX,chatgpt.livekit.cloud
+  - DOMAIN-SUFFIX,host.livekit.cloud
+  - DOMAIN-SUFFIX,turn.livekit.cloud
+
+  # ===== Misc OpenAI media =====
+  - DOMAIN,openaicom.imgix.net
+  - DOMAIN,o33249.ingest.sentry.io   # specific project; narrower than sentry.io global
+
+  # ===== Keyword-based catch-alls =====
+  - DOMAIN-KEYWORD,copilot            # GitHub Copilot / MS Copilot AI (broad)
+  # - DOMAIN-KEYWORD,openai            # (optional) can be noisy
+  # - DOMAIN-KEYWORD,chatgpt           # (optional) may overmatch 3rd-party sites
+
+  # ----------------------------------------------------------------------
+  # TikTok Global (from blackmatrix7; trimmed safe superset)
+  # ----------------------------------------------------------------------
+  - DOMAIN,lf16-effectcdn.byteeffecttos-g.com
+  - DOMAIN,lf16-pkgcdn.pitaya-clientai.com
+  - DOMAIN,p16-tiktokcdn-com.akamaized.net
+  - DOMAIN-SUFFIX,bytedapm.com
+  - DOMAIN-SUFFIX,bytegecko-i18n.com
+  - DOMAIN-SUFFIX,byteoversea.com
+  - DOMAIN-SUFFIX,capcut.com
+  - DOMAIN-SUFFIX,ibytedtos.com
+  - DOMAIN-SUFFIX,ibyteimg.com
+  - DOMAIN-SUFFIX,ipstatp.com
+  - DOMAIN-SUFFIX,isnssdk.com
+  - DOMAIN-SUFFIX,muscdn.com
+  - DOMAIN-SUFFIX,musical.ly
+  - DOMAIN-SUFFIX,sgpstatp.com
+  - DOMAIN-SUFFIX,snssdk.com
+  - DOMAIN-SUFFIX,tik-tokapi.com
+  - DOMAIN-SUFFIX,tiktok.com
+  - DOMAIN-SUFFIX,tiktokcdn-us.com
+  - DOMAIN-SUFFIX,tiktokcdn.com
+  - DOMAIN-SUFFIX,tiktokd.net
+  - DOMAIN-SUFFIX,tiktokd.org
+  - DOMAIN-SUFFIX,tiktokmusic.app
+  - DOMAIN-SUFFIX,tiktokv.com
+  - DOMAIN-SUFFIX,tiktokv.us
+  - DOMAIN-SUFFIX,ttwebview.com
+  - DOMAIN-KEYWORD,musical.ly
+  - DOMAIN-KEYWORD,tiktok
+  - PROCESS-NAME,com.zhiliaoapp.musically  # Android/iOS app id
