@@ -17,10 +17,10 @@ payload:
   - DOMAIN,billing.openai.com
 
   # (Optional) broader matches – comment in if needed
-  # - DOMAIN-SUFFIX,ai.com                     # ai.com → ChatGPT redirect; may change regionally
-  # - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
-  # - DOMAIN-SUFFIX,arkoselabs.com             # global Arkose; broad
-  # - DOMAIN-SUFFIX,stripe.com                 # global Stripe; broad
+  - DOMAIN-SUFFIX,ai.com                     # ai.com → ChatGPT redirect; may change regionally
+  - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
+  - DOMAIN-SUFFIX,arkoselabs.com             # global Arkose; broad
+  - DOMAIN-SUFFIX,stripe.com                 # global Stripe; broad
 
   # ===== OpenAI Aux infra / CDN / assets =====
   - DOMAIN,openaiapi-site.azureedge.net
@@ -61,7 +61,7 @@ payload:
 
   # ===== Keyword-based catch-alls =====
   - DOMAIN-KEYWORD,copilot            # GitHub Copilot / MS Copilot AI (broad)
-  # - DOMAIN-KEYWORD,openai            # (optional) can be noisy
+  - DOMAIN-KEYWORD,openai            # (optional) can be noisy
   # - DOMAIN-KEYWORD,chatgpt           # (optional) may overmatch 3rd-party sites
 
   # ----------------------------------------------------------------------
