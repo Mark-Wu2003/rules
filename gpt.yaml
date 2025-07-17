@@ -2,7 +2,7 @@
 
 payload:
   # ===== OpenAI Core =====
-  - PROCESS-NAME,chatgpt
+
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,chatgpt.com
   - DOMAIN-SUFFIX,oaistatic.com
@@ -51,9 +51,7 @@ payload:
   - DOMAIN,openaicom.imgix.net
   - DOMAIN,o33249.ingest.sentry.io   # specific project; narrower than sentry.io global
 
-  # ===== Keyword-based catch-alls =====
-  - DOMAIN-KEYWORD,copilot            # GitHub Copilot / MS Copilot AI (broad)
-  - DOMAIN-KEYWORD,openai            # (optional) can be noisy
+  - PROCESS-NAME,chatgpt
   
 
   # ----------------------------------------------------------------------
