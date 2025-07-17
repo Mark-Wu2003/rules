@@ -1,6 +1,6 @@
 
 payload:
-  - PROCESS-NAME,zoom.us
+
   - DOMAIN-SUFFIX,zoom.us,Zoom
   - DOMAIN-SUFFIX,zpns.zoom.us,Zoom
   - DOMAIN-SUFFIX,cloud.zoom.us,Zoom
@@ -8,3 +8,4 @@ payload:
   - DOMAIN-SUFFIX,zoomgov.com,Zoom
   - DOMAIN-SUFFIX,zoominfo.com,Zoom
   - DOMAIN-KEYWORD,zoom,Zoom
+  - PROCESS-NAME,zoom.us
