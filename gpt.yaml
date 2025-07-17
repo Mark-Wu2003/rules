@@ -1,7 +1,4 @@
 # NAME: ChatGPT+TikTok (Mark Custom)
-# DESC: Consolidated from local inline rules + community snippets (OpenAI, Arkose, Stripe, Azure OpenAI edge endpoints, BlackMatrix7 TikTok globals).
-# BEHAVIOR: classical   # because we mix DOMAIN, DOMAIN-SUFFIX, DOMAIN-KEYWORD, PROCESS-NAME
-# UPDATED: 2025-07-17 (manual merge)
 
 payload:
   # ===== OpenAI Core =====
