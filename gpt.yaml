@@ -2,6 +2,7 @@
 
 payload:
   # ===== OpenAI Core =====
+  - PROCESS-NAME,chatgpt
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,chatgpt.com
   - DOMAIN-SUFFIX,oaistatic.com
@@ -41,12 +42,6 @@ payload:
   # ===== Security / Human check =====
   - DOMAIN,client-api.arkoselabs.com
 
-  # ===== Google static used in some ChatGPT flows =====
-  - DOMAIN-SUFFIX,t0.gstatic.com
-  - DOMAIN-SUFFIX,t1.gstatic.com
-  - DOMAIN-SUFFIX,t2.gstatic.com
-  - DOMAIN-SUFFIX,t3.gstatic.com
-
   # ===== LiveKit (ChatGPT Voice / Realtime infra) =====
   - DOMAIN-SUFFIX,chatgpt.livekit.cloud
   - DOMAIN-SUFFIX,host.livekit.cloud
@@ -59,7 +54,7 @@ payload:
   # ===== Keyword-based catch-alls =====
   - DOMAIN-KEYWORD,copilot            # GitHub Copilot / MS Copilot AI (broad)
   - DOMAIN-KEYWORD,openai            # (optional) can be noisy
-  # - DOMAIN-KEYWORD,chatgpt           # (optional) may overmatch 3rd-party sites
+  
 
   # ----------------------------------------------------------------------
   # TikTok Global (from blackmatrix7; trimmed safe superset)
