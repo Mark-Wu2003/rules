@@ -48,7 +48,7 @@ payload:
   # ===== Misc OpenAI media =====
   - DOMAIN,openaicom.imgix.net
 
-  - PROCESS-NAME,chatgpt
+  - PROCESS-NAME,ChatGPT
   
 
   # ----------------------------------------------------------------------
