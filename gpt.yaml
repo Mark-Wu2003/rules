@@ -30,10 +30,8 @@ payload:
 
   # ===== Telemetry / Analytics used in ChatGPT =====
   - DOMAIN-SUFFIX,browser-intake-datadoghq.com
-  - DOMAIN-SUFFIX,static.cloudflareinsights.com
   - DOMAIN,api.statsig.com
   - DOMAIN,events.statsigapi.net
-  - DOMAIN-SUFFIX,sentry.io
   - DOMAIN-SUFFIX,segment.io
   - DOMAIN,api-iam.intercom.io
   - DOMAIN,nexus-websocket-a.intercom.io
@@ -49,7 +47,6 @@ payload:
 
   # ===== Misc OpenAI media =====
   - DOMAIN,openaicom.imgix.net
-  - DOMAIN,o33249.ingest.sentry.io   # specific project; narrower than sentry.io global
 
   - PROCESS-NAME,chatgpt
   
