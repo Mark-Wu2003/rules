@@ -29,24 +29,29 @@ payload:
   - DOMAIN-SUFFIX,grok.x.ai         # redundant; kept for clarity
 
   # ===== Telemetry / Analytics used in ChatGPT =====
-  - DOMAIN-SUFFIX,browser-intake-datadoghq.com
-  - DOMAIN,api.statsig.com
-  - DOMAIN,events.statsigapi.net
-  - DOMAIN-SUFFIX,segment.io
-  - DOMAIN,api-iam.intercom.io
-  - DOMAIN,nexus-websocket-a.intercom.io
-  - DOMAIN,nexus-websocket-b.intercom.io
+  # - DOMAIN-SUFFIX,browser-intake-datadoghq.com
+  # - DOMAIN,api.statsig.com
+  # - DOMAIN,events.statsigapi.net
+  # - DOMAIN-SUFFIX,segment.io
+  # - DOMAIN,api-iam.intercom.io
+  # - DOMAIN,nexus-websocket-a.intercom.io
+  # - DOMAIN,nexus-websocket-b.intercom.io
 
   # ===== Security / Human check =====
-  - DOMAIN,client-api.arkoselabs.com
+  # - DOMAIN,client-api.arkoselabs.com
 
   # ===== LiveKit (ChatGPT Voice / Realtime infra) =====
   - DOMAIN-SUFFIX,chatgpt.livekit.cloud
-  - DOMAIN-SUFFIX,host.livekit.cloud
-  - DOMAIN-SUFFIX,turn.livekit.cloud
+  # - DOMAIN-SUFFIX,host.livekit.cloud
+  # - DOMAIN-SUFFIX,turn.livekit.cloud
 
   # ===== Misc OpenAI media =====
   - DOMAIN,openaicom.imgix.net
+
+  # ===== Gemini / Google Generative Language API =====
+  - DOMAIN-SUFFIX,generativelanguage.googleapis.com
+  - DOMAIN-SUFFIX,v1beta.openai
+  - DOMAIN-SUFFIX,gemini.google.com
 
   - PROCESS-NAME,ChatGPT
   
