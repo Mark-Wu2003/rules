@@ -52,8 +52,9 @@ payload:
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com
   - DOMAIN-SUFFIX,v1beta.openai
   - DOMAIN-SUFFIX,gemini.google.com
-
+  - DOMAIN-SUFFIX, poecdn.net
   - PROCESS-NAME,ChatGPT
+  - PROCESS-NAME,Poe Helper
   
 
   # ----------------------------------------------------------------------
