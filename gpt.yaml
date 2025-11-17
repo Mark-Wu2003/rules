@@ -27,6 +27,19 @@ payload:
   - DOMAIN,production-openaicom-storage.azureedge.net
   - DOMAIN-SUFFIX,x.ai              # Grok (xAI)
   - DOMAIN-SUFFIX,grok.x.ai         # redundant; kept for clarity
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com
+  - DOMAIN-SUFFIX,featuregates.org
+  - DOMAIN-SUFFIX,featureassets.org
+  - DOMAIN-SUFFIX,statsigapi.net
+  - DOMAIN,events.statsigapi.net
+  - DOMAIN-SUFFIX,workos.com
+  - DOMAIN-SUFFIX,workoscdn.com
+  - DOMAIN-SUFFIX,ct.sendgrid.net
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN-SUFFIX,datadoghq.com
+  - DOMAIN,rum.browser-intake-datadoghq.com
+  - DOMAIN,cdn.openaimerge.com
 
   # ===== Telemetry / Analytics used in ChatGPT =====
   # - DOMAIN-SUFFIX,browser-intake-datadoghq.com
@@ -50,9 +63,13 @@ payload:
 
   # ===== Gemini / Google Generative Language API =====
   - DOMAIN-SUFFIX,generativelanguage.googleapis.com
-  - DOMAIN-SUFFIX,v1beta.openai
+  # - DOMAIN-SUFFIX,v1beta.openai  # invalid domain (path fragment), kept commented for reference
+  - DOMAIN-SUFFIX,aiplatform.googleapis.com
+  - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com   # “Gemini for Google Cloud”/助手相关，可选
   - DOMAIN-SUFFIX,gemini.google.com
-  - DOMAIN-SUFFIX, poecdn.net
+  - DOMAIN,aistudio.google.com
+  - DOMAIN-SUFFIX,ai.google.dev
+  - DOMAIN-SUFFIX,poecdn.net
   - PROCESS-NAME,ChatGPT
   - PROCESS-NAME,Poe Helper
   
