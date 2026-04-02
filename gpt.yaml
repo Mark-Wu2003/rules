@@ -2,7 +2,6 @@
 
 payload:
   # ===== OpenAI Core =====
-
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,chatgpt.com
   - DOMAIN-SUFFIX,oaistatic.com
@@ -19,6 +18,18 @@ payload:
   - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
   - DOMAIN-SUFFIX,arkoselabs.com             # global Arkose; broad
   - DOMAIN-SUFFIX,stripe.com                 # global Stripe; broad
+
+  # ===== Claude / Anthropic =====
+  - DOMAIN,claude.ai
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN,api.anthropic.com
+  - DOMAIN,console.anthropic.com
+  - DOMAIN,docs.anthropic.com
+  - DOMAIN,status.anthropic.com
+  - DOMAIN,support.anthropic.com
+  - DOMAIN,anthropic.com
+  - DOMAIN-SUFFIX,anthropic.com
+  - PROCESS-NAME,Claude
 
   # ===== OpenAI Aux infra / CDN / assets =====
   - DOMAIN,openaiapi-site.azureedge.net
@@ -104,4 +115,3 @@ payload:
   - DOMAIN-SUFFIX,ttwebview.com
   - DOMAIN-KEYWORD,musical.ly
   - DOMAIN-KEYWORD,tiktok
-  - PROCESS-NAME,com.zhiliaoapp.musically  # Android/iOS app id
