@@ -1,0 +1,14 @@
+# NAME: claude
+
+payload:
+  # ===== Claude / Anthropic =====
+  - DOMAIN,claude.ai
+  - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN,api.anthropic.com
+  - DOMAIN,console.anthropic.com
+  - DOMAIN,docs.anthropic.com
+  - DOMAIN,status.anthropic.com
+  - DOMAIN,support.anthropic.com
+  - DOMAIN,anthropic.com
+  - DOMAIN-SUFFIX,anthropic.com
+  - PROCESS-NAME,Claude
