@@ -19,18 +19,6 @@ payload:
   - DOMAIN-SUFFIX,arkoselabs.com             # global Arkose; broad
   - DOMAIN-SUFFIX,stripe.com                 # global Stripe; broad
 
-  # ===== Claude / Anthropic =====
-  - DOMAIN,claude.ai
-  - DOMAIN-SUFFIX,claude.ai
-  - DOMAIN,api.anthropic.com
-  - DOMAIN,console.anthropic.com
-  - DOMAIN,docs.anthropic.com
-  - DOMAIN,status.anthropic.com
-  - DOMAIN,support.anthropic.com
-  - DOMAIN,anthropic.com
-  - DOMAIN-SUFFIX,anthropic.com
-  - PROCESS-NAME,Claude
-
   # ===== OpenAI Aux infra / CDN / assets =====
   - DOMAIN,openaiapi-site.azureedge.net
   - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
