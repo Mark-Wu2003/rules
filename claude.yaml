@@ -14,3 +14,4 @@ payload:
   - DOMAIN,status.anthropic.com
 
   - PROCESS-NAME,Claude
+  - PROCESS-NAME,Claude Helper
