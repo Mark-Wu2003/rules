@@ -1,14 +1,16 @@
 # NAME: claude
 
 payload:
-  # ===== Claude / Anthropic =====
-  - DOMAIN,claude.ai
+  # ===== Claude current primary surfaces =====
   - DOMAIN-SUFFIX,claude.ai
+  - DOMAIN-SUFFIX,claude.com
+
+  # ===== Anthropic API =====
   - DOMAIN,api.anthropic.com
+
+  # ===== Legacy / compatibility redirects =====
   - DOMAIN,console.anthropic.com
   - DOMAIN,docs.anthropic.com
   - DOMAIN,status.anthropic.com
-  - DOMAIN,support.anthropic.com
-  - DOMAIN,anthropic.com
-  - DOMAIN-SUFFIX,anthropic.com
+
   - PROCESS-NAME,Claude
