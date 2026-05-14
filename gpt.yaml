@@ -1,0 +1,135 @@
+# NAME: ChatGPT+TikTok (Mark Custom)
+
+payload:
+  # ===== OpenAI / ChatGPT Core =====
+  - DOMAIN-SUFFIX,openai.com
+  - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-SUFFIX,oaistatic.com
+  - DOMAIN-SUFFIX,oaiusercontent.com
+  - DOMAIN-SUFFIX,auth.openai.com
+  - DOMAIN-SUFFIX,statsig.com
+  - DOMAIN,auth0.openai.com                    # OpenAI Auth
+  - DOMAIN,policies.openai.com
+  - DOMAIN,temp.api.openai.com
+  - DOMAIN,staging.openai.com
+  - DOMAIN,billing.openai.com
+  - DOMAIN,android.chat.openai.com
+  - DOMAIN,chat.openai.com
+  - DOMAIN,desktop.chat.openai.com
+  - DOMAIN,ios.chat.openai.com
+  - DOMAIN,tcr9i.chat.openai.com
+  - DOMAIN,ws.chatgpt.com
+  - DOMAIN,setup.auth.openai.com
+
+  # (Optional) broader matches – comment in if needed
+  - DOMAIN-SUFFIX,ai.com                     # ai.com → ChatGPT redirect; may change regionally
+  # - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
+  # - DOMAIN-SUFFIX,stripe.com                 # too broad; keep js.stripe.com below for ChatGPT billing
+
+  # ===== OpenAI Aux infra / CDN / assets =====
+  - DOMAIN,openaiapi-site.azureedge.net
+  - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
+  - DOMAIN,openaicomproductionae4b.blob.core.windows.net
+  - DOMAIN,production-openaicom-storage.azureedge.net
+  - DOMAIN,cdn.openaimerge.com
+  - DOMAIN,prodregistryv2.org
+  - DOMAIN-SUFFIX,x.ai              # Grok (xAI)
+  - DOMAIN-SUFFIX,grok.x.ai         # redundant; kept for clarity
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com
+  - DOMAIN-SUFFIX,featuregates.org
+  - DOMAIN-SUFFIX,featureassets.org
+  - DOMAIN-SUFFIX,statsigapi.net
+  - DOMAIN,events.statsigapi.net
+  - DOMAIN-SUFFIX,workos.com
+  - DOMAIN-SUFFIX,workoscdn.com
+  - DOMAIN,cdn.workos.com
+  - DOMAIN,forwarder.workos.com
+  - DOMAIN,images.workoscdn.com
+  - DOMAIN,setup.workos.com
+  - DOMAIN,workos.imgix.net
+  - DOMAIN-SUFFIX,ct.sendgrid.net
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN,o207216.ingest.sentry.io
+  - DOMAIN,o33249.ingest.sentry.io
+  - DOMAIN,rum.browser-intake-datadoghq.com
+  - DOMAIN,browser-intake-datadoghq.com
+  - DOMAIN,browser-intake-us5-datadoghq.com
+  - DOMAIN,js.intercomcdn.com
+  - DOMAIN,js.stripe.com
+  - DOMAIN,humb.apple.com
+  - DOMAIN,register.appattest.apple.com
+
+  # ===== Telemetry / Analytics used in ChatGPT =====
+  # - DOMAIN-SUFFIX,browser-intake-datadoghq.com
+  # - DOMAIN,api.statsig.com
+  # - DOMAIN,events.statsigapi.net
+  # - DOMAIN-SUFFIX,segment.io
+  # - DOMAIN,api-iam.intercom.io
+  # - DOMAIN,nexus-websocket-a.intercom.io
+  # - DOMAIN,nexus-websocket-b.intercom.io
+
+  # ===== LiveKit (ChatGPT Voice / Realtime infra) =====
+  - DOMAIN-SUFFIX,chatgpt.livekit.cloud
+  # - DOMAIN-SUFFIX,host.livekit.cloud
+  # - DOMAIN-SUFFIX,turn.livekit.cloud
+
+  # ===== Misc OpenAI media =====
+  - DOMAIN,openaicom.imgix.net
+
+  # ===== Gemini / Google Generative Language API =====
+  - DOMAIN-SUFFIX,generativelanguage.googleapis.com
+  # - DOMAIN-SUFFIX,v1beta.openai  # invalid domain (path fragment), kept commented for reference
+  - DOMAIN-SUFFIX,aiplatform.googleapis.com
+  - DOMAIN-SUFFIX,cloudaicompanion.googleapis.com   # “Gemini for Google Cloud”/助手相关，可选
+  - DOMAIN-SUFFIX,gemini.google.com
+  - DOMAIN,aistudio.google.com
+  - DOMAIN-SUFFIX,ai.google.dev
+
+  # ===== Poe / Quora AI =====
+  - DOMAIN-SUFFIX,poe.com
+  - DOMAIN-SUFFIX,quora.com
+  - DOMAIN-SUFFIX,poecdn.net
+  - PROCESS-NAME,ChatGPT
+  - PROCESS-NAME,Poe Helper
+
+  # ===== GitHub Copilot =====
+  - DOMAIN-SUFFIX,githubcopilot.com
+  - DOMAIN,copilot-proxy.githubusercontent.com
+  - DOMAIN,copilot-telemetry.githubusercontent.com
+  - DOMAIN,origin-tracker.githubusercontent.com
+  - DOMAIN,collector.github.com
+  - DOMAIN,default.exp-tas.com
+  - DOMAIN,copilot-reports.github.com
+  
+
+  # ----------------------------------------------------------------------
+  # TikTok Global (from blackmatrix7; trimmed safe superset)
+  # ----------------------------------------------------------------------
+  - DOMAIN,lf16-effectcdn.byteeffecttos-g.com
+  - DOMAIN,lf16-pkgcdn.pitaya-clientai.com
+  - DOMAIN,p16-tiktokcdn-com.akamaized.net
+  - DOMAIN-SUFFIX,bytedapm.com
+  - DOMAIN-SUFFIX,bytegecko-i18n.com
+  - DOMAIN-SUFFIX,byteoversea.com
+  - DOMAIN-SUFFIX,capcut.com
+  - DOMAIN-SUFFIX,ibytedtos.com
+  - DOMAIN-SUFFIX,ibyteimg.com
+  - DOMAIN-SUFFIX,ipstatp.com
+  - DOMAIN-SUFFIX,isnssdk.com
+  - DOMAIN-SUFFIX,muscdn.com
+  - DOMAIN-SUFFIX,musical.ly
+  - DOMAIN-SUFFIX,sgpstatp.com
+  - DOMAIN-SUFFIX,snssdk.com
+  - DOMAIN-SUFFIX,tik-tokapi.com
+  - DOMAIN-SUFFIX,tiktok.com
+  - DOMAIN-SUFFIX,tiktokcdn-us.com
+  - DOMAIN-SUFFIX,tiktokcdn.com
+  - DOMAIN-SUFFIX,tiktokd.net
+  - DOMAIN-SUFFIX,tiktokd.org
+  - DOMAIN-SUFFIX,tiktokmusic.app
+  - DOMAIN-SUFFIX,tiktokv.com
+  - DOMAIN-SUFFIX,tiktokv.us
+  - DOMAIN-SUFFIX,ttwebview.com
+  - DOMAIN-KEYWORD,musical.ly
+  - DOMAIN-KEYWORD,tiktok

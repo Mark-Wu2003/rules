@@ -1,0 +1,24 @@
+# NAME: JetBrains
+
+payload:
+  # ===== JetBrains IDEs / Toolbox / Marketplace / Licensing =====
+  - DOMAIN-SUFFIX,jetbrains.com
+  - DOMAIN,account.jetbrains.com
+  - DOMAIN,download.jetbrains.com
+  - DOMAIN,download-cdn.jetbrains.com
+  - DOMAIN,plugins.jetbrains.com
+  - DOMAIN,downloads.marketplace.jetbrains.com
+  - DOMAIN,resources.jetbrains.com
+  - DOMAIN,data.services.jetbrains.com
+
+  # ===== JetBrains AI / cloud settings =====
+  - DOMAIN,api.jetbrains.ai
+  - DOMAIN,cloudconfig.jetbrains.com
+  - DOMAIN,services.jetbrains.com
+
+  # ===== JetBrains IDE process names =====
+  - PROCESS-NAME,idea
+  - PROCESS-NAME,pycharm
+  - PROCESS-NAME,webstorm
+  - PROCESS-NAME,goland
+  - PROCESS-NAME,rider

@@ -1,0 +1,10 @@
+
+payload:
+  - DOMAIN-SUFFIX,zoom.us
+  - DOMAIN-SUFFIX,zoom.com
+  - DOMAIN-SUFFIX,zoomgov.com
+  - DOMAIN-SUFFIX,zoomstatus.com
+  - DOMAIN-SUFFIX,zoomapp.cloud
+  - DOMAIN-SUFFIX,zpns.zoom.us
+  - DOMAIN-SUFFIX,cloud.zoom.us
+  - PROCESS-NAME,zoom.us

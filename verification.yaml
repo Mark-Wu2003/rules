@@ -1,0 +1,35 @@
+# NAME: Verification Challenges
+
+payload:
+  # ===== Cloudflare Turnstile / Challenge Platform =====
+  - DOMAIN,challenges.cloudflare.com
+
+  # Existing Cloudflare challenge-adjacent surfaces kept together to avoid split routing.
+  - DOMAIN,stun.cloudflare.com
+  - DOMAIN,static.cloudflareinsights.com
+  - DOMAIN-SUFFIX,cloudflareinsights.com
+
+  # ===== Arkose Labs / common bot checks =====
+  - DOMAIN,client-api.arkoselabs.com
+  - DOMAIN,cdn.arkoselabs.com
+  - DOMAIN,status.arkoselabs.com
+  - DOMAIN-SUFFIX,arkoselabs.com
+
+  # ===== hCaptcha =====
+  - DOMAIN,js.hcaptcha.com
+  - DOMAIN-SUFFIX,hcaptcha.com
+
+  # ===== reCAPTCHA-compatible fallback domain =====
+  - DOMAIN-SUFFIX,recaptcha.net
+
+  # ===== DataDome =====
+  - DOMAIN,js.datadome.co
+  - DOMAIN,api-js.datadome.co
+  - DOMAIN,ct.captcha-delivery.com
+  - DOMAIN,geo.captcha-delivery.com
+  - DOMAIN-SUFFIX,datadome.co
+  - DOMAIN-SUFFIX,captcha-delivery.com
+
+  # ===== Other common challenge providers =====
+  - DOMAIN-SUFFIX,geetest.com
+  - DOMAIN-SUFFIX,geevisit.com
