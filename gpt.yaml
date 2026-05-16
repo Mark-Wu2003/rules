@@ -27,6 +27,8 @@ payload:
   # - DOMAIN-SUFFIX,stripe.com                 # too broad; keep js.stripe.com below for ChatGPT billing
 
   # ===== OpenAI Aux infra / CDN / assets =====
+  - DOMAIN,chat.openai.com.cdn.cloudflare.net
+  - DOMAIN,openai-api.arkoselabs.com
   - DOMAIN,openaiapi-site.azureedge.net
   - DOMAIN,openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net
   - DOMAIN,openaicomproductionae4b.blob.core.windows.net
@@ -39,9 +41,13 @@ payload:
   - DOMAIN-SUFFIX,intercomcdn.com
   - DOMAIN-SUFFIX,featuregates.org
   - DOMAIN-SUFFIX,featureassets.org
+  - DOMAIN,assetsconfigcdn.org
   - DOMAIN-SUFFIX,statsigapi.net
+  - DOMAIN,api.statsig.com
   - DOMAIN,events.statsigapi.net
   - DOMAIN-SUFFIX,statsigcdn.com                # Statsig SDK/配置 CDN；api.statsigcdn.com 被 hagezi 拦，放这里走 AI 节点并先于 reject 命中
+  - DOMAIN,api.statsigcdn.com
+  - DOMAIN,beyondwickedmapping.org
   - DOMAIN-SUFFIX,workos.com
   - DOMAIN-SUFFIX,workoscdn.com
   - DOMAIN,cdn.workos.com
@@ -53,27 +59,36 @@ payload:
   - DOMAIN-SUFFIX,sentry.io
   - DOMAIN,o207216.ingest.sentry.io
   - DOMAIN,o33249.ingest.sentry.io
+  - DOMAIN-SUFFIX,browser-intake-datadoghq.com
   - DOMAIN,rum.browser-intake-datadoghq.com
-  - DOMAIN,browser-intake-datadoghq.com
-  - DOMAIN,browser-intake-us5-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-us3-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-us5-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-ap1-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-ap2-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-datadoghq.eu
+  - DOMAIN-SUFFIX,browser-intake-ddog-gov.com
+  - DOMAIN-SUFFIX,browser-intake-us2-ddog-gov.com
   - DOMAIN,js.intercomcdn.com
   - DOMAIN,js.stripe.com
   - DOMAIN,humb.apple.com
   - DOMAIN,register.appattest.apple.com
 
   # ===== Telemetry / Analytics used in ChatGPT =====
-  # - DOMAIN-SUFFIX,browser-intake-datadoghq.com
-  # - DOMAIN,api.statsig.com
-  # - DOMAIN,events.statsigapi.net
-  # - DOMAIN-SUFFIX,segment.io
-  # - DOMAIN,api-iam.intercom.io
-  # - DOMAIN,nexus-websocket-a.intercom.io
-  # - DOMAIN,nexus-websocket-b.intercom.io
+  - DOMAIN-SUFFIX,segment.io
+  - DOMAIN,api.segment.io
+  - DOMAIN,cdn.segment.io
+  - DOMAIN-SUFFIX,cdn.segment.com
+  - DOMAIN,api-iam.intercom.io
+  - DOMAIN,nexus-websocket-a.intercom.io
+  - DOMAIN,nexus-websocket-b.intercom.io
+  - DOMAIN-SUFFIX,algolia.net
+  - DOMAIN-SUFFIX,launchdarkly.com
+  - DOMAIN-SUFFIX,observeit.net
 
   # ===== LiveKit (ChatGPT Voice / Realtime infra) =====
   - DOMAIN-SUFFIX,chatgpt.livekit.cloud
-  # - DOMAIN-SUFFIX,host.livekit.cloud
-  # - DOMAIN-SUFFIX,turn.livekit.cloud
+  - DOMAIN-SUFFIX,host.livekit.cloud
+  - DOMAIN-SUFFIX,turn.livekit.cloud
 
   # ===== Misc OpenAI media =====
   - DOMAIN,openaicom.imgix.net

@@ -21,6 +21,7 @@ payload:
 
   # ===== reCAPTCHA-compatible fallback domain =====
   - DOMAIN-SUFFIX,recaptcha.net
+  - DOMAIN-SUFFIX,recaptcha-cn.net
 
   # ===== DataDome =====
   - DOMAIN,js.datadome.co

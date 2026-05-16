@@ -4,20 +4,52 @@ payload:
   # ===== Claude current primary surfaces =====
   - DOMAIN-SUFFIX,claude.ai
   - DOMAIN-SUFFIX,claude.com
+  - DOMAIN-SUFFIX,clau.de
   - DOMAIN-SUFFIX,anthropic.com
   - DOMAIN-SUFFIX,claudeusercontent.com         # Claude Artifacts 沙箱 iframe 域名（独立 origin，不在 claude.ai 后缀下）
+  - DOMAIN-SUFFIX,claudemcpclient.com
 
   # ===== Anthropic API =====
   - DOMAIN,api.anthropic.com
+  - DOMAIN,a-api.anthropic.com
+  - DOMAIN,a-cdn.anthropic.com
 
   # ===== Console / docs / support / status =====
   - DOMAIN,platform.claude.com
   - DOMAIN,console.anthropic.com
+  - DOMAIN,api.console.anthropic.com
+  - DOMAIN,auth.console.anthropic.com
+  - DOMAIN,billing.anthropic.com
   - DOMAIN,docs.anthropic.com
   - DOMAIN,docs.claude.com
   - DOMAIN,support.claude.com
   - DOMAIN,status.claude.com
   - DOMAIN,status.anthropic.com
+
+  # ===== Claude telemetry / diagnostics / feature flags =====
+  - DOMAIN,statsig.anthropic.com
+  - DOMAIN,analytics-api.anthropic.com
+  - DOMAIN,analytics-cdn.anthropic.com
+  - DOMAIN,metrics.anthropic.com
+  - DOMAIN,events.anthropic.com
+  - DOMAIN-SUFFIX,sentry.io
+  - DOMAIN-SUFFIX,ingest.us.sentry.io
+  - DOMAIN-SUFFIX,browser-intake-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-us3-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-us5-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-ap1-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-ap2-datadoghq.com
+  - DOMAIN-SUFFIX,browser-intake-datadoghq.eu
+  - DOMAIN-SUFFIX,browser-intake-ddog-gov.com
+  - DOMAIN-SUFFIX,browser-intake-us2-ddog-gov.com
+  - DOMAIN,cdn.usefathom.com
+
+  # ===== Claude Code / desktop / artifact support =====
+  - DOMAIN,downloads.claude.ai
+  - DOMAIN,storage.googleapis.com
+  - DOMAIN,bridge.claudeusercontent.com
+  - DOMAIN,www.claudeusercontent.com
+  - DOMAIN,servd-anthropic-website.b-cdn.net
 
   - PROCESS-NAME,Claude
   - PROCESS-NAME,Claude Helper
