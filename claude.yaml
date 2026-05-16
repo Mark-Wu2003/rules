@@ -5,6 +5,7 @@ payload:
   - DOMAIN-SUFFIX,claude.ai
   - DOMAIN-SUFFIX,claude.com
   - DOMAIN-SUFFIX,anthropic.com
+  - DOMAIN-SUFFIX,claudeusercontent.com         # Claude Artifacts 沙箱 iframe 域名（独立 origin，不在 claude.ai 后缀下）
 
   # ===== Anthropic API =====
   - DOMAIN,api.anthropic.com

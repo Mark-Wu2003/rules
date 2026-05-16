@@ -41,6 +41,7 @@ payload:
   - DOMAIN-SUFFIX,featureassets.org
   - DOMAIN-SUFFIX,statsigapi.net
   - DOMAIN,events.statsigapi.net
+  - DOMAIN-SUFFIX,statsigcdn.com                # Statsig SDK/配置 CDN；api.statsigcdn.com 被 hagezi 拦，放这里走 AI 节点并先于 reject 命中
   - DOMAIN-SUFFIX,workos.com
   - DOMAIN-SUFFIX,workoscdn.com
   - DOMAIN,cdn.workos.com
