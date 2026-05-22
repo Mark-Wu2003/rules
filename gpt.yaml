@@ -48,6 +48,8 @@ payload:
   - DOMAIN,events.statsigapi.net
   - DOMAIN-SUFFIX,statsigcdn.com                # Statsig SDK/配置 CDN；api.statsigcdn.com 被 hagezi 拦，放这里走 AI 节点并先于 reject 命中
   - DOMAIN,api.statsigcdn.com
+  - DOMAIN,cloudflare-dns.com
+  - DOMAIN,idliststorage.blob.core.windows.net
   - DOMAIN,beyondwickedmapping.org
   - DOMAIN-SUFFIX,workos.com
   - DOMAIN-SUFFIX,workoscdn.com
@@ -82,6 +84,24 @@ payload:
   - DOMAIN,api-iam.intercom.io
   - DOMAIN,nexus-websocket-a.intercom.io
   - DOMAIN,nexus-websocket-b.intercom.io
+  - DOMAIN-SUFFIX,intercom-messenger.com
+  - DOMAIN-SUFFIX,intercomusercontent.com
+  - DOMAIN-SUFFIX,intercom-sheets.com
+  - DOMAIN-SUFFIX,intercom-reporting.com
+  - DOMAIN-SUFFIX,intercomassets.com
+  - DOMAIN-SUFFIX,intercomassets.eu
+  - DOMAIN-SUFFIX,intercom.help
+  - DOMAIN-SUFFIX,intercom-attachments-1.com
+  - DOMAIN-SUFFIX,intercom-attachments-2.com
+  - DOMAIN-SUFFIX,intercom-attachments-3.com
+  - DOMAIN-SUFFIX,intercom-attachments-4.com
+  - DOMAIN-SUFFIX,intercom-attachments-5.com
+  - DOMAIN-SUFFIX,intercom-attachments-6.com
+  - DOMAIN-SUFFIX,intercom-attachments-7.com
+  - DOMAIN-SUFFIX,intercom-attachments-8.com
+  - DOMAIN-SUFFIX,intercom-attachments-9.com
+  - DOMAIN-SUFFIX,intercom-attachments.eu
+  - DOMAIN-SUFFIX,au.intercom-attachments.com
   - DOMAIN-SUFFIX,algolia.net
   - DOMAIN-SUFFIX,launchdarkly.com
   - DOMAIN-SUFFIX,observeit.net

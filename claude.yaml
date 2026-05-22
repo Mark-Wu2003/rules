@@ -65,12 +65,20 @@ payload:
   - DOMAIN,login.microsoftonline.com
 
   # ===== Claude provider-routed inference paths =====
+  - DOMAIN,accounts.google.com
+  - DOMAIN,oauth2.googleapis.com
   - DOMAIN,sts.amazonaws.com
   - DOMAIN-KEYWORD,bedrock-runtime
   - DOMAIN-KEYWORD,bedrock-mantle
   - DOMAIN-KEYWORD,bedrock.
+  - DOMAIN-KEYWORD,bedrock-agent.
+  - DOMAIN-KEYWORD,bedrock-agent-runtime.
   - DOMAIN-SUFFIX,aiplatform.googleapis.com
+  - DOMAIN-KEYWORD,-aiplatform.googleapis.com
+  - DOMAIN,aiplatform.us.rep.googleapis.com
+  - DOMAIN,aiplatform.eu.rep.googleapis.com
   - DOMAIN-SUFFIX,services.ai.azure.com
+  - DOMAIN-SUFFIX,openai.azure.com
 
   - PROCESS-NAME,Claude
   - PROCESS-NAME,Claude Helper
