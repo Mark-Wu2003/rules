@@ -13,6 +13,7 @@ payload:
   - DOMAIN,temp.api.openai.com
   - DOMAIN,staging.openai.com
   - DOMAIN,billing.openai.com
+  - DOMAIN,pay.openai.com
   - DOMAIN,android.chat.openai.com
   - DOMAIN,chat.openai.com
   - DOMAIN,desktop.chat.openai.com

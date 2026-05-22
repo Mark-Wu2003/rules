@@ -17,11 +17,14 @@ payload:
 
   # ===== hCaptcha =====
   - DOMAIN,js.hcaptcha.com
+  - DOMAIN,api.hcaptcha.com
   - DOMAIN-SUFFIX,hcaptcha.com
 
   # ===== reCAPTCHA-compatible fallback domain =====
+  - DOMAIN,www.recaptcha.net
   - DOMAIN-SUFFIX,recaptcha.net
   - DOMAIN-SUFFIX,recaptcha-cn.net
+  - DOMAIN,register.appattest.apple.com
 
   # ===== DataDome =====
   - DOMAIN,js.datadome.co
@@ -34,3 +37,4 @@ payload:
   # ===== Other common challenge providers =====
   - DOMAIN-SUFFIX,geetest.com
   - DOMAIN-SUFFIX,geevisit.com
+  - DOMAIN-SUFFIX,gsensebot.com
