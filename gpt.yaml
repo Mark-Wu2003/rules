@@ -4,6 +4,8 @@ payload:
   # ===== OpenAI / ChatGPT Core =====
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,chatgpt.com
+  - DOMAIN-KEYWORD,openai
+  - DOMAIN-KEYWORD,chatgpt
   - DOMAIN-SUFFIX,oaistatic.com
   - DOMAIN-SUFFIX,oaiusercontent.com
   - DOMAIN-SUFFIX,auth.openai.com

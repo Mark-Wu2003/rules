@@ -4,6 +4,8 @@ payload:
   # ===== Claude current primary surfaces =====
   - DOMAIN-SUFFIX,claude.ai
   - DOMAIN-SUFFIX,claude.com
+  - DOMAIN-KEYWORD,claude
+  - DOMAIN-KEYWORD,anthropic
   - DOMAIN-SUFFIX,clau.de
   - DOMAIN-SUFFIX,anthropic.com
   - DOMAIN-SUFFIX,claudeusercontent.com         # Claude Artifacts 沙箱 iframe 域名（独立 origin，不在 claude.ai 后缀下）
