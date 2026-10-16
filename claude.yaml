@@ -1,15 +1,19 @@
 # NAME: claude
+# REVIEWED: 2026-10-16; evidence, scope and validation: README.md
+# Classical provider. Also load verification.yaml; align shared-host egress.
 
 payload:
   # ===== Claude current primary surfaces =====
   - DOMAIN-SUFFIX,claude.ai
   - DOMAIN-SUFFIX,claude.com
-  - DOMAIN-KEYWORD,claude
-  - DOMAIN-KEYWORD,anthropic
-  - DOMAIN-SUFFIX,clau.de
+  # Official Desktop wildcard families and the official cookie-domain inventory.
+  - DOMAIN-SUFFIX,claude.app
+  - DOMAIN-SUFFIX,claude.dev
+  - DOMAIN-SUFFIX,claudemcpcontent.com
+  - DOMAIN-SUFFIX,clau.de                     # retained legacy shortcut
   - DOMAIN-SUFFIX,anthropic.com
   - DOMAIN-SUFFIX,claudeusercontent.com         # Claude Artifacts 沙箱 iframe 域名（独立 origin，不在 claude.ai 后缀下）
-  - DOMAIN-SUFFIX,claudemcpclient.com
+  - DOMAIN-SUFFIX,claudemcpclient.com         # retained compatibility domain
 
   # ===== Anthropic API =====
   - DOMAIN,api.anthropic.com
@@ -30,6 +34,8 @@ payload:
   - DOMAIN,status.anthropic.com
 
   # ===== Claude telemetry / diagnostics / feature flags =====
+  # Official CLI intake; other pre-existing telemetry rules remain for compatibility.
+  - DOMAIN,http-intake.logs.us5.datadoghq.com
   - DOMAIN,statsig.anthropic.com
   - DOMAIN,analytics-api.anthropic.com
   - DOMAIN,analytics-cdn.anthropic.com
@@ -58,6 +64,33 @@ payload:
   - DOMAIN,www.claudeusercontent.com
   - DOMAIN,servd-anthropic-website.b-cdn.net
   - DOMAIN,raw.githubusercontent.com
+  # Official CLI dependencies. These also route unrelated traffic to the SAME hosts.
+  # Exact github.com is intentional; this is NOT a blanket *.github.com rule.
+  - DOMAIN,github.com
+  - DOMAIN,registry.npmjs.org
+  - DOMAIN,formulae.brew.sh
+  - DOMAIN-REGEX,^.+-review\.googlesource\.com$
+
+  # ===== Official Artifact library and font hosts =====
+  # Libraries can be necessary for an Artifact; fonts are optional. Shared CDNs.
+  - DOMAIN,cdnjs.cloudflare.com
+  - DOMAIN,cdn.jsdelivr.net
+  - DOMAIN,cdn.tailwindcss.com
+  - DOMAIN,code.jquery.com
+  - DOMAIN,unpkg.com
+  - DOMAIN,fonts.googleapis.com
+  - DOMAIN,fonts.gstatic.com
+
+  # ===== Verification / attestation / support (shared dependencies) =====
+  # Persona is an official Claude verification partner. Keep verification intact.
+  - DOMAIN,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,withpersona.com
+  - DOMAIN-SUFFIX,appattest.apple.com
+  - DOMAIN,js.stripe.com
+  - DOMAIN,m.stripe.com
+  - DOMAIN-SUFFIX,hcaptcha.com
+  - DOMAIN-SUFFIX,intercom.io
+  - DOMAIN-SUFFIX,intercomcdn.com
 
   # ===== Claude MCP / Microsoft 365 connectors =====
   - DOMAIN,mcp-proxy.anthropic.com
@@ -66,7 +99,8 @@ payload:
   - DOMAIN,appsforoffice.microsoft.com
   - DOMAIN,login.microsoftonline.com
 
-  # ===== Claude provider-routed inference paths =====
+  # ===== Existing provider-routed inference compatibility =====
+  # Legacy Bedrock/Vertex keyword rules retained; not a proof of full provider coverage.
   - DOMAIN,accounts.google.com
   - DOMAIN,oauth2.googleapis.com
   - DOMAIN,sts.amazonaws.com
@@ -82,5 +116,12 @@ payload:
   - DOMAIN-SUFFIX,services.ai.azure.com
   - DOMAIN-SUFFIX,openai.azure.com
 
+  # ===== Official INBOUND Claude API / Console IP fallback =====
+  # Not Anthropic's OUTBOUND /21 and not Cloudflare's shared address space.
+  # no-resolve never initiates DNS and cannot identify every unknown hostname.
+  - IP-CIDR,160.79.104.0/23,no-resolve
+  - IP-CIDR6,2607:6bc0::/48,no-resolve
+
+  # Process rules are a desktop compatibility aid, not iOS coverage evidence.
   - PROCESS-NAME,Claude
   - PROCESS-NAME,Claude Helper
