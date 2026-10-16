@@ -1,10 +1,14 @@
 # NAME: Verification Challenges
+# REVIEWED: 2026-10-16; evidence, scope and validation: README.md
+# Shared-provider routing, NOT permission to bypass any verification.
+# Load with the relevant AI provider and use the same intended egress.
+# Host-only rules cannot distinguish AI from other users of shared services.
 
 payload:
   # ===== Cloudflare Turnstile / Challenge Platform =====
   - DOMAIN,challenges.cloudflare.com
 
-  # Existing Cloudflare challenge-adjacent surfaces kept together to avoid split routing.
+  # Retained compatibility: STUN and analytics are NOT Turnstile requirements.
   - DOMAIN,stun.cloudflare.com
   - DOMAIN,static.cloudflareinsights.com
   - DOMAIN-SUFFIX,cloudflareinsights.com
@@ -20,11 +24,53 @@ payload:
   - DOMAIN,api.hcaptcha.com
   - DOMAIN-SUFFIX,hcaptcha.com
 
-  # ===== reCAPTCHA-compatible fallback domain =====
+  # ===== reCAPTCHA: primary hosts AND the documented fallback =====
+  # These exact hosts also carry non-reCAPTCHA traffic, including Google Search.
+  # HTTPS paths cannot be isolated by these domain-only routing rules.
+  - DOMAIN,www.google.com
+  - DOMAIN,www.gstatic.com
+  - DOMAIN,recaptcha.google.com
   - DOMAIN,www.recaptcha.net
   - DOMAIN-SUFFIX,recaptcha.net
   - DOMAIN-SUFFIX,recaptcha-cn.net
   - DOMAIN,register.appattest.apple.com
+  - DOMAIN-SUFFIX,appattest.apple.com
+
+  # ===== Persona: Claude identity / ChatGPT age verification =====
+  # Covers the documented hosts plus regional/custom subdomains.
+  - DOMAIN-SUFFIX,withpersona.com
+
+  # ===== OAuth / sign-in dependencies (shared, not a complete IdP inventory) =====
+  # Includes protocol endpoints; some are used server-side, not by every client.
+  - DOMAIN,accounts.google.com
+  - DOMAIN,oauth2.googleapis.com
+  - DOMAIN,openidconnect.googleapis.com
+  - DOMAIN,www.googleapis.com
+  - DOMAIN,appleid.apple.com
+  - DOMAIN,appleid.cdn-apple.com
+  - DOMAIN,login.microsoftonline.com
+  - DOMAIN,graph.microsoft.com
+
+  # ===== WorkOS: exact entries in OpenAI's published network allowlist =====
+  - DOMAIN,cdn.workos.com
+  - DOMAIN,forwarder.workos.com
+  - DOMAIN,frontend-apps-multi-region.workos.com
+  - DOMAIN,images.workoscdn.com
+  - DOMAIN,setup.workos.com
+  - DOMAIN,workos.imgix.net
+
+  # ===== Stripe frontend / verification / fraud-detection dependencies =====
+  # Selected published web endpoints, NOT all Stripe services or bank 3DS hosts.
+  - DOMAIN,js.stripe.com
+  - DOMAIN,api.stripe.com
+  - DOMAIN,m.stripe.com
+  - DOMAIN,m.stripe.network
+  - DOMAIN,r.stripe.com
+  - DOMAIN,checkout.stripe.com
+  - DOMAIN,hooks.stripe.com
+  - DOMAIN,billing.stripe.com
+  - DOMAIN,verify.stripe.com
+  - DOMAIN-SUFFIX,stripecdn.com
 
   # ===== DataDome =====
   - DOMAIN,js.datadome.co

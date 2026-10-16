@@ -1,13 +1,16 @@
 # NAME: ChatGPT+TikTok (Mark Custom)
+# REVIEWED: 2026-10-16; evidence, scope and validation: README.md
+# Classical provider. Also load verification.yaml; align shared-host egress.
 
 payload:
   # ===== OpenAI / ChatGPT Core =====
   - DOMAIN-SUFFIX,openai.com
   - DOMAIN-SUFFIX,chatgpt.com
-  - DOMAIN-KEYWORD,openai
-  - DOMAIN-KEYWORD,chatgpt
   - DOMAIN-SUFFIX,oaistatic.com
   - DOMAIN-SUFFIX,oaiusercontent.com
+  - DOMAIN-SUFFIX,oaistatsig.com
+  # Preserve Azure OpenAI coverage without the old unbounded brand keyword.
+  - DOMAIN-SUFFIX,openai.azure.com
   - DOMAIN-SUFFIX,auth.openai.com
   - DOMAIN-SUFFIX,statsig.com
   - DOMAIN,auth0.openai.com                    # OpenAI Auth
@@ -24,8 +27,8 @@ payload:
   - DOMAIN,ws.chatgpt.com
   - DOMAIN,setup.auth.openai.com
 
-  # (Optional) broader matches – comment in if needed
-  - DOMAIN-SUFFIX,ai.com                     # ai.com → ChatGPT redirect; may change regionally
+  # Legacy extra retained for compatibility; NOT asserted to be an OpenAI domain.
+  - DOMAIN-SUFFIX,ai.com
   # - DOMAIN-SUFFIX,auth0.com                  # too broad; many other tenants
   # - DOMAIN-SUFFIX,stripe.com                 # too broad; keep js.stripe.com below for ChatGPT billing
 
@@ -50,6 +53,8 @@ payload:
   - DOMAIN,events.statsigapi.net
   - DOMAIN-SUFFIX,statsigcdn.com                # Statsig SDK/配置 CDN；api.statsigcdn.com 被 hagezi 拦，放这里走 AI 节点并先于 reject 命中
   - DOMAIN,api.statsigcdn.com
+  # General-purpose DoH compatibility, NOT AI or verification identification.
+  # Retained to avoid silently changing DNS egress in the parent profile.
   - DOMAIN,cloudflare-dns.com
   - DOMAIN,idliststorage.blob.core.windows.net
   - DOMAIN,beyondwickedmapping.org
@@ -57,6 +62,7 @@ payload:
   - DOMAIN-SUFFIX,workoscdn.com
   - DOMAIN,cdn.workos.com
   - DOMAIN,forwarder.workos.com
+  - DOMAIN,frontend-apps-multi-region.workos.com  # already covered by workos.com
   - DOMAIN,images.workoscdn.com
   - DOMAIN,setup.workos.com
   - DOMAIN,workos.imgix.net
@@ -77,6 +83,12 @@ payload:
   - DOMAIN,js.stripe.com
   - DOMAIN,humb.apple.com
   - DOMAIN,register.appattest.apple.com
+
+  # ===== Verification / attestation (shared services; not bypass rules) =====
+  # Official OpenAI networking and age-verification guidance; sources in README.md.
+  - DOMAIN,challenges.cloudflare.com
+  - DOMAIN-SUFFIX,withpersona.com
+  - DOMAIN-SUFFIX,appattest.apple.com
 
   # ===== Telemetry / Analytics used in ChatGPT =====
   - DOMAIN-SUFFIX,segment.io
