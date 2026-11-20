@@ -8,6 +8,10 @@ Domain review: **2026-10-16**; Anthropic inbound ranges and ChatGPT Voice feed: 
 
 The acceptance target is **100% of the versioned declarations in `tests/routing-corpus.json`**, not 100% of all future destinations or all network traffic. The corpus contains domains, wildcard families and CIDRs independently transcribed from the linked official sources. Constructed URL tests are explicitly synthetic, not captured sessions. Optional dependencies remain enabled for recall; they are not claimed to prevent account restrictions.
 
+**On-demand review gate:** preserve or improve measured recall. Compare baseline and candidate on the same known-positive cases, retain lookalike/port negative controls, and explain every removal against a current primary source. Count connection routing and DNS separately: a known AI name must not silently move to ordinary/direct DNS even if the connection still selects AI. Verify a failed AI resolver or rejecting proxy does not fall back to domestic/system DNS, and ordinary services still work. Do not pad recall by routing an entire shared CDN or country. Record what was tested in a compatible core versus on the actual client.
+
+For a parent profile, match the protected domain rules and domain collections in `dns.nameserver-policy`, ahead of broad domestic collection policies. On Mihomo, pin the approved DoH upstreams to the proxy-only group (quoted `#group` URLs). On Stash iOS, use its `follow-rule` option and explicit AI/REJECT routes for those upstream IPs. Keep proxy-node bootstrap DNS independent; do not remove domestic DNS globally or reject all DNS answers that geolocate to China. Raw-IP voice media has no domain lookup to protect.
+
 Offline corpus: **163/163 declaration checks**, including **29 wildcard-family checks**; **33/33 constructed URL checks**; **93/93 negative checks**. A declaration checked against three providers counts three times. These numbers are neither unique observed hosts nor a global false-positive estimate. These repository checks do not exercise a client or real-device traffic.
 
 ## Changes and corrections to the supplied research
