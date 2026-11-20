@@ -1,6 +1,6 @@
 # AI routing rules: Claude, OpenAI and verification
 
-Reviewed **2026-10-16**. These are Stash/Mihomo **classical rule providers**, not a complete client configuration, a firewall trust list, or an account-safety guarantee.
+Domain review: **2026-10-16**; Anthropic inbound ranges and ChatGPT Voice feed: **2026-11-21**. The YAML files are Stash/Mihomo classical rule providers. The Voice file is a separate text IP-CIDR provider.
 
 ## Coverage contract
 
@@ -8,13 +8,13 @@ Reviewed **2026-10-16**. These are Stash/Mihomo **classical rule providers**, no
 
 The acceptance target is **100% of the versioned declarations in `tests/routing-corpus.json`**, not 100% of all future destinations or all network traffic. The corpus contains domains, wildcard families and CIDRs independently transcribed from the linked official sources. Constructed URL tests are explicitly synthetic, not captured sessions. Optional dependencies remain enabled for recall; they are not claimed to prevent account restrictions.
 
-Local snapshot: **162/162 declaration checks**, including **29 wildcard-family checks**; **33/33 constructed URL checks**; **93/93 negative checks**; **12/12 matcher/parser tests**. A declaration checked against three providers counts three times. These numbers are neither unique observed hosts nor a global false-positive estimate. No Stash/Mihomo binary or real-device traffic was exercised.
+Offline corpus: **163/163 declaration checks**, including **29 wildcard-family checks**; **33/33 constructed URL checks**; **93/93 negative checks**. A declaration checked against three providers counts three times. These numbers are neither unique observed hosts nor a global false-positive estimate. These repository checks do not exercise a client or real-device traffic.
 
 ## Changes and corrections to the supplied research
 
 | File | Active rules before → after | Main changes |
 |---|---:|---|
-| `claude.yaml` | 69 → 92 | Explicit `claude.app`, `claude.dev`, `claudemcpcontent.com`; CLI/Artifact dependencies; Persona, App Attest and Turnstile; inbound IPv4/IPv6 fallback. |
+| `claude.yaml` | 69 → 93 | Explicit `claude.app`, `claude.dev`, `claudemcpcontent.com`; CLI/Artifact dependencies; Persona, App Attest and Turnstile; inbound IPv4/IPv6 fallback, including `153.61.224.0/22`. |
 | `gpt.yaml` | 146 → 150 | `oaistatsig.com`, explicit Azure OpenAI suffix, Turnstile, Persona and App Attest; documented WorkOS frontend entry. |
 | `verification.yaml` | 24 → 53 | reCAPTCHA primary hosts, Persona, App Attest, selected Google/Apple/Microsoft sign-in, WorkOS and Stripe web dependencies. |
 
@@ -74,13 +74,40 @@ python scripts/verify_rules.py --live --report audit-live.json
 
 The validator checks YAML structure/duplicates, label-aware suffixes, anchored regexes, IP boundaries, wildcard-family coverage and negative examples. Process-name rules never count as domain coverage. `no-resolve` does not trigger DNS solely to evaluate an IP rule; it is not a guarantee that unknown hostnames are captured.
 
-The GitHub Actions workflow runs offline checks on push and pull requests. A manual workflow run with `live=true` additionally examines five bounded sections: OpenAI's allowlist, Claude Desktop, Claude Code, Anthropic inbound IPs and Persona's allowlist. It fails on uncovered targets, fetch errors, missing/ambiguous headings or suspiciously small parses. It **does not auto-edit rules**, monitor every source, validate the proxy engine, or run on a recurring schedule. The live parser's synthetic tests pass; end-to-end upstream fetching was not validated from the authoring container because outbound DNS was unavailable. A changed page layout can require human review.
+The verification workflow runs offline checks on pushes and pull requests. A manual run with `live=true` also checks five official documentation sections. CI has read-only repository permissions. There is no scheduled fetch, automatic commit, or automatic publish.
 
 ## Remaining deployment gates
 
 **No universal 100% claim.** Arbitrary MCP/tool sites, custom enterprise identity providers, gateways, bank 3DS redirects and all third-party model-hosting dependencies remain open-ended. The Stripe subsection is selected web coverage, not Stripe's entire infrastructure list. Phone rules do not control a remote Linux/K8s Claude Code process's egress.
 
-**Voice remains a separate gap.** OpenAI documents changing raw-IP Voice destinations in [chatgpt-voice.json](https://openai.com/chatgpt-voice.json), with UDP/3478 and TCP/443 fallback. That feed was not retrievable during this audit; no guessed or stale Voice CIDRs were inserted. Existing LiveKit domain rules do not prove coverage of IP-literal media traffic. Do not disable all UDP and then claim full Voice coverage.
+**ChatGPT Voice is separate from the domain lists.** Only refresh on request. From this repository, fetch [OpenAI's public feed](https://openai.com/chatgpt-voice.json), inspect added and removed destinations and the upstream timestamp, and run the tests:
+
+```sh
+python3 scripts/update_voice_ips.py chatgpt-voice-ip.txt
+git diff -- chatgpt-voice-ip.txt
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/verify_rules.py
+```
+
+The converter only changes the local working copy. Publish the reviewed changes to `main` explicitly; the clients never consume uncommitted changes. Added addresses extend matching at the configured ports; removed addresses no longer match that list. A timestamp-only change does not change coverage. A failed download, stale timestamp, malformed input, unexpected broad ranges or mass removal leave the previous file intact. Use `--input path/to/feed.json` to inspect the same downloaded snapshot again. A first install needs a valid seed.
+
+Clients can check the published text file independently every six hours. Keep the last valid copy at the provider's cache path, especially for first use on iOS. A newly added address is not explicitly protected until both publication and client refresh have succeeded. Keep existing service or verification rules above these; place all four lines before generic IP/DIRECT/MATCH rules. Replace `AI_EGRESS` with a proxy-only group with an explicit rejecting choice:
+
+```yaml
+rule-providers:
+  chatgpt_voice_ip:
+    type: http
+    behavior: ipcidr
+    format: text
+    url: "https://raw.githubusercontent.com/Mark-Wu2003/rules/main/chatgpt-voice-ip.txt"
+    interval: 21600
+    path: ./ruleset/chatgpt-voice-ip.txt
+rules:
+  - AND,((NETWORK,udp),(DST-PORT,3478),(RULE-SET,chatgpt_voice_ip,no-resolve)),AI_EGRESS
+  - AND,((NETWORK,udp),(DST-PORT,3478),(RULE-SET,chatgpt_voice_ip,no-resolve)),REJECT
+  - AND,((NETWORK,tcp),(DST-PORT,443),(RULE-SET,chatgpt_voice_ip,no-resolve)),AI_EGRESS
+  - AND,((NETWORK,tcp),(DST-PORT,443),(RULE-SET,chatgpt_voice_ip,no-resolve)),REJECT
+```
 
 **Verify on the actual client.** Refresh the three providers, confirm `behavior: classical`, inspect the effective top-to-bottom rules, and test login, API streaming, uploads, Artifacts, CLI installation and ordinary verification. Record the matched provider, policy and actual exit; check for unexpected DIRECT. Preserve WebSocket upgrades and long connections; do not decrypt sensitive login traffic to make routing work. Stash iOS does not support process-name matching; preserved process rules are desktop compatibility only.
 

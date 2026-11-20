@@ -116,10 +116,11 @@ payload:
   - DOMAIN-SUFFIX,services.ai.azure.com
   - DOMAIN-SUFFIX,openai.azure.com
 
-  # ===== Official INBOUND Claude API / Console IP fallback =====
-  # Not Anthropic's OUTBOUND /21 and not Cloudflare's shared address space.
+  # ===== Official INBOUND Claude API / Console IP fallback (reviewed 2026-11-21) =====
+  # Not Anthropic's outbound service networks or Cloudflare's shared address space.
   # no-resolve never initiates DNS and cannot identify every unknown hostname.
   - IP-CIDR,160.79.104.0/23,no-resolve
+  - IP-CIDR,153.61.224.0/22,no-resolve
   - IP-CIDR6,2607:6bc0::/48,no-resolve
 
   # Process rules are a desktop compatibility aid, not iOS coverage evidence.

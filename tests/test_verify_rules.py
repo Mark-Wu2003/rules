@@ -39,6 +39,14 @@ class RulesTests(unittest.TestCase):
         self.assertTrue(v.covers_network('160.79.104.0/23', rules))
         self.assertFalse(v.covers_network('160.79.104.0/21', rules))
 
+    def test_second_anthropic_inbound_range(self):
+        rules = v.load(Path(__file__).resolve().parents[1] / 'claude.yaml')
+        for ip in ('153.61.224.0', '153.61.227.255'):
+            self.assertTrue(v.covers(ip, rules))
+        for ip in ('153.61.223.255', '153.61.228.0', '153.61.208.1'):
+            self.assertFalse(v.covers(ip, rules))
+        self.assertFalse(v.covers_network('153.61.208.0/20', rules))
+
     def test_process_is_not_domain_evidence(self):
         self.assertFalse(v.covers('api.anthropic.com', [('PROCESS-NAME', 'Claude')]))
 
