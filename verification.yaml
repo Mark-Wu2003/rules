@@ -32,6 +32,8 @@ payload:
   - DOMAIN,recaptcha.google.com
   - DOMAIN,www.recaptcha.net
   - DOMAIN-SUFFIX,recaptcha.net
+  # Separate compatibility family, not Google's documented www.recaptcha.net fallback.
+  # The parent profile chooses the verification egress; this is not a denylist.
   - DOMAIN-SUFFIX,recaptcha-cn.net
   - DOMAIN,register.appattest.apple.com
   - DOMAIN-SUFFIX,appattest.apple.com

@@ -18,10 +18,12 @@ from urllib.request import Request, urlopen
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-FILES = ('claude.yaml', 'gpt.yaml', 'verification.yaml')
+FILES = ('claude.yaml', 'gpt.yaml', 'verification.yaml', 'gemini.yaml')
 BRANDS = {'claude', 'anthropic', 'openai', 'chatgpt'}
 BROAD = {'cloudflare.com', 'cloudflare.net', 'akamaized.net', 'fastly.net',
-         'googleapis.com', 'googleusercontent.com', 'github.com'}
+         'googleapis.com', 'googleusercontent.com', 'github.com', 'api.aws',
+         'datadoghq.com', 'datadoghq.eu', 'ddog-gov.com', 'amazonaws.com',
+         'apple.com', 'cdn-apple.com', 'stripe.com'}
 GERRIT = r'^.+-review\.googlesource\.com$'
 
 
@@ -101,6 +103,8 @@ def load(path: Path) -> list[tuple[str, str]]:
         raise AuditError(f'{path}: expected a nonempty list of rule strings')
     if len(raw) != len(set(raw)):
         raise AuditError(f'{path}: duplicate active rule')
+    if path.name == 'gemini.yaml':
+        return [parse_rule('DOMAIN,' + name) for name in raw]
     return [parse_rule(rule) for rule in raw]
 
 
@@ -186,7 +190,7 @@ def normalized(text: str) -> str:
     return re.sub(r'[^a-z0-9]+', ' ', text.lower()).strip()
 
 
-def section(document: str, heading: str) -> str:
+def section(document: str, heading: str, table_first_column: str | None = None) -> str:
     candidates = []
     if re.search(r'<h[1-6]\b', document, re.I):
         from bs4 import BeautifulSoup, NavigableString, Tag
@@ -201,10 +205,18 @@ def section(document: str, heading: str) -> str:
             for item in tag.next_elements:
                 if isinstance(item, Tag) and re.fullmatch(r'h[1-6]', item.name or '') and int(item.name[1]) <= int(tag.name[1]):
                     break
-                if isinstance(item, NavigableString):
+                if table_first_column and isinstance(item, Tag) and item.name == 'table':
+                    header = item.select_one('tr > th:first-child')
+                    if header and normalized(header.get_text(' ', strip=True)) == normalized(table_first_column):
+                        pieces.append('\n'.join(cell.get_text(' ', strip=True) for cell in item.select('tr > td:first-child')))
+                elif not table_first_column and isinstance(item, NavigableString):
                     pieces.append(str(item))
+            if table_first_column and (len(pieces) != 1 or not pieces[0].strip()):
+                raise AuditError(f'Expected one nonempty {table_first_column!r} table column in section {heading!r}')
             candidates.append('\n'.join(pieces))
     else:
+        if table_first_column:
+            raise AuditError(f'Expected an HTML table in section {heading!r}')
         lines = document.splitlines()
         for index, line in enumerate(lines):
             h = re.match(r'^(#{1,6})\s+(.+?)\s*#*\s*$', line)
@@ -249,7 +261,8 @@ def live_audit(root: Path, corpus: dict) -> list[dict]:
                 body = response.read(4_000_001)
             if len(body) > 4_000_000:
                 raise AuditError('Document exceeds 4 MB limit')
-            targets = extract(section(body.decode('utf-8'), spec['heading']), spec.get('kind', 'domains'))
+            content = section(body.decode('utf-8'), spec['heading'], spec.get('table_first_column'))
+            targets = extract(content, spec.get('kind', 'domains'))
             if len(targets) < spec['minimum']:
                 raise AuditError(f'Only {len(targets)} targets parsed; expected at least {spec["minimum"]}. Review parser/source drift.')
             checker = covers_network if spec.get('kind') == 'networks' else covers

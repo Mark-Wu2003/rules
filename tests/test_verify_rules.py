@@ -2,13 +2,40 @@
 import sys
 import tempfile
 import unittest
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 import verify_rules as v
 
 
 class RulesTests(unittest.TestCase):
+    def test_http_provider_example(self):
+        config = yaml.load((v.ROOT / 'examples/ai-providers.yaml').read_text(), Loader=v.UniqueLoader)
+        providers = config['rule-providers']
+        expected = {'verification': ('verification.yaml', 'classical'), 'claude': ('claude.yaml', 'classical'),
+                    'chatgpt': ('gpt.yaml', 'classical'), 'gemini': ('gemini.yaml', 'domain'),
+                    'chatgpt_voice_ip': ('chatgpt-voice-ip.txt', 'ipcidr')}
+        self.assertEqual(set(providers), set(expected))
+        for name, (file, behavior) in expected.items():
+            with self.subTest(provider=name):
+                provider = providers[name]
+                self.assertTrue((v.ROOT / file).is_file())
+                self.assertEqual(provider['url'], 'https://raw.githubusercontent.com/Mark-Wu2003/rules/main/' + file)
+                self.assertEqual((provider['type'], provider['behavior']), ('http', behavior))
+                self.assertEqual(provider['format'], 'text' if behavior == 'ipcidr' else 'yaml')
+                self.assertGreater(provider['interval'], 0)
+                cache = PurePosixPath(provider['path'])
+                self.assertFalse(cache.is_absolute())
+                self.assertNotIn('..', cache.parts)
+                self.assertEqual(cache.name, file)
+        matches = [f'RULE-SET,{name}' for name in expected if name != 'chatgpt_voice_ip']
+        matches.extend(f'AND,((NETWORK,{net}),(DST-PORT,{port}),(RULE-SET,chatgpt_voice_ip,no-resolve))'
+                       for net, port in [('udp', 3478), ('tcp', 443)])
+        self.assertEqual(config['rules'], [f'{match},{policy}' for match in matches
+                                           for policy in ('AI_EGRESS', 'REJECT')])
+
     def test_suffix_boundaries(self):
         rules = [v.parse_rule('DOMAIN-SUFFIX,claude.ai')]
         for name in ['claude.ai', 'api.claude.ai', 'a.b.claude.ai']:
@@ -50,9 +77,22 @@ class RulesTests(unittest.TestCase):
     def test_process_is_not_domain_evidence(self):
         self.assertFalse(v.covers('api.anthropic.com', [('PROCESS-NAME', 'Claude')]))
 
+    def test_gemini_provider_is_exact(self):
+        rules = v.load(Path(__file__).resolve().parents[1] / 'gemini.yaml')
+        self.assertTrue(v.covers('https://dl.google.com/release2/example/Gemini.dmg', rules))
+        for host in ('dl.google.com.evil.example', 'sub.dl.google.com', 'mail.google.com', 'google.com',
+                     'not-aicode.googleapis.com', 'sub.daily-cloudcode-pa.googleapis.com',
+                     'antigravity-cli-auto-updater-974169037036.us-central1.run.app.evil.example',
+                     'unrelated.us-central1.run.app'):
+            with self.subTest(host=host):
+                self.assertFalse(v.covers(host, rules))
+
     def test_invalid_and_overbroad_rules(self):
         for rule in ['DOMAIN-KEYWORD,claude', 'DOMAIN-SUFFIX,cloudflare.com', 'IP-ASN,13335',
                      'DOMAIN,cloudflare-ech.com', 'DOMAIN,example.com,AI', 'IP-CIDR,2607:6bc0::/48,no-resolve',
+                     'DOMAIN-SUFFIX,api.aws', 'DOMAIN-SUFFIX,datadoghq.com',
+                     'DOMAIN-SUFFIX,amazonaws.com', 'DOMAIN-SUFFIX,apple.com',
+                     'DOMAIN-SUFFIX,cdn-apple.com', 'DOMAIN-SUFFIX,stripe.com',
                      'IP-CIDR,0.0.0.0/0,no-resolve', 'DOMAIN-SUFFIX,*.claude.ai', 'DOMAIN-REGEX,claude']:
             with self.subTest(rule=rule), self.assertRaises(v.AuditError):
                 v.parse_rule(rule)
@@ -67,6 +107,18 @@ class RulesTests(unittest.TestCase):
     def test_html_bounded_section(self):
         text = '<nav><h2>Required</h2>outside.example</nav><h2>Required</h2><p>api.example.com *.content.example.app</p><script>hidden.example.com</script><h3>Optional</h3><p>cdn.example.net</p><h2>Next</h2>outside.example'
         self.assertEqual(v.extract(v.section(text, 'Required')), {'api.example.com', '*.content.example.app', 'cdn.example.net'})
+
+    def test_live_endpoint_table_excludes_prose_destinations(self):
+        table = ('<table><tr><th>URL</th><th>Required for</th></tr>'
+                 '<tr><td><code>*-review.googlesource.com</code></td>'
+                 '<td>Gerrit lookup for a googlesource.com checkout</td></tr>'
+                 '<tr><td><code>api.anthropic.com</code></td><td>API</td></tr></table>')
+        text = '<h2>Network access</h2>' + table + '<p>Other docs: example.com</p>'
+        self.assertEqual(v.extract(v.section(text, 'Network access', 'URL')),
+                         {'*-review.googlesource.com', 'api.anthropic.com'})
+        for value in ('<h2>Network access</h2><p>api.anthropic.com</p>', text + table):
+            with self.subTest(value=value), self.assertRaises(v.AuditError):
+                v.section(value, 'Network access', 'URL')
 
     def test_markdown_and_new_tld(self):
         text = '## Required\napi.example.tech\n### Optional\n*-review.googlesource.com\n## Next\nnot.example'

@@ -1,5 +1,5 @@
 # NAME: claude
-# REVIEWED: 2026-10-16; evidence, scope and validation: README.md
+# Targeted review: 2026-11-28 (shared STS and UK1 RUM); see README.md
 # Classical provider. Also load verification.yaml; align shared-host egress.
 
 payload:
@@ -19,6 +19,9 @@ payload:
   - DOMAIN,api.anthropic.com
   - DOMAIN,a-api.anthropic.com
   - DOMAIN,a-cdn.anthropic.com
+  # Anthropic-operated public API hosts on partner clouds, not shared cloud suffixes.
+  - DOMAIN,claude.googleapis.com
+  - DOMAIN,aws-external-anthropic.us-west-2.api.aws
 
   # ===== Console / docs / support / status =====
   - DOMAIN,platform.claude.com
@@ -34,7 +37,8 @@ payload:
   - DOMAIN,status.anthropic.com
 
   # ===== Claude telemetry / diagnostics / feature flags =====
-  # Official CLI intake; other pre-existing telemetry rules remain for compatibility.
+  # The two US5 Datadog hosts are documented CLI intake. Other shared rules
+  # remain for compatibility; API traffic and feature flags must not be blocked.
   - DOMAIN,http-intake.logs.us5.datadoghq.com
   - DOMAIN,statsig.anthropic.com
   - DOMAIN,analytics-api.anthropic.com
@@ -49,6 +53,8 @@ payload:
   - DOMAIN-SUFFIX,browser-intake-us5-datadoghq.com
   - DOMAIN-SUFFIX,browser-intake-ap1-datadoghq.com
   - DOMAIN-SUFFIX,browser-intake-ap2-datadoghq.com
+  # Both clients protect this shared intake; it does not identify a Claude tenant.
+  - DOMAIN,browser-intake-uk1-datadoghq.com
   - DOMAIN-SUFFIX,browser-intake-datadoghq.eu
   - DOMAIN-SUFFIX,browser-intake-ddog-gov.com
   - DOMAIN-SUFFIX,browser-intake-us2-ddog-gov.com
@@ -104,6 +110,9 @@ payload:
   - DOMAIN,accounts.google.com
   - DOMAIN,oauth2.googleapis.com
   - DOMAIN,sts.amazonaws.com
+  # Regional STS for AWS credential flows. Other AWS clients using these hosts also match.
+  - DOMAIN,sts.ap-southeast-1.amazonaws.com
+  - DOMAIN,sts.ap-southeast-1.api.aws
   - DOMAIN-KEYWORD,bedrock-runtime
   - DOMAIN-KEYWORD,bedrock-mantle
   - DOMAIN-KEYWORD,bedrock.

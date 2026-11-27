@@ -15,6 +15,16 @@ def feed(rows=None, date='2026-01-02T00:00:00Z'):
 
 
 class VoiceFeedTests(unittest.TestCase):
+    def test_checked_in_snapshot(self):
+        source, stamp, *entries = voice.DEFAULT_OUTPUT.read_text(encoding='ascii').splitlines()
+        self.assertEqual(source, f'# Source: {voice.SOURCE}')
+        prefix = '# creationTime: '
+        self.assertTrue(stamp.startswith(prefix))
+        rows = [{'ipv6Prefix' if ':' in entry else 'ipv4Prefix': entry} for entry in entries]
+        _, networks = voice.parse_feed(feed(rows, stamp.removeprefix(prefix)))
+        ordered = sorted(networks, key=lambda n: (n.version, int(n.network_address)))
+        self.assertEqual(entries, [str(network) for network in ordered])
+
     def test_roundtrip_order_and_idempotence(self):
         rows = json.loads(feed())['prefixes'] + [{'ipv6Prefix': '2606:4700:4700::1111/128'}]
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,0 +1,53 @@
+# Fragment for an existing Mihomo/Stash profile, not a standalone subscription.
+# Use your existing proxy-only group in place of AI_EGRESS. Keep any populated cache paths.
+rule-providers:
+  verification:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/Mark-Wu2003/rules/main/verification.yaml
+    path: ./rules/verification.yaml
+    interval: 86400
+  claude:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/Mark-Wu2003/rules/main/claude.yaml
+    path: ./rules/claude.yaml
+    interval: 86400
+  chatgpt:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://raw.githubusercontent.com/Mark-Wu2003/rules/main/gpt.yaml
+    path: ./rules/gpt.yaml
+    interval: 86400
+  gemini:
+    type: http
+    behavior: domain
+    format: yaml
+    url: https://raw.githubusercontent.com/Mark-Wu2003/rules/main/gemini.yaml
+    path: ./ruleset/gemini.yaml
+    interval: 86400
+  chatgpt_voice_ip:
+    type: http
+    behavior: ipcidr
+    format: text
+    url: https://raw.githubusercontent.com/Mark-Wu2003/rules/main/chatgpt-voice-ip.txt
+    path: ./ruleset/chatgpt-voice-ip.txt
+    interval: 21600
+
+# Insert before general ads/DIRECT/GEOIP/MATCH rules, retaining local cold-start guards.
+rules:
+  - RULE-SET,verification,AI_EGRESS
+  - RULE-SET,verification,REJECT
+  - RULE-SET,claude,AI_EGRESS
+  - RULE-SET,claude,REJECT
+  - RULE-SET,chatgpt,AI_EGRESS
+  - RULE-SET,chatgpt,REJECT
+  - RULE-SET,gemini,AI_EGRESS
+  - RULE-SET,gemini,REJECT
+  - AND,((NETWORK,udp),(DST-PORT,3478),(RULE-SET,chatgpt_voice_ip,no-resolve)),AI_EGRESS
+  - AND,((NETWORK,udp),(DST-PORT,3478),(RULE-SET,chatgpt_voice_ip,no-resolve)),REJECT
+  - AND,((NETWORK,tcp),(DST-PORT,443),(RULE-SET,chatgpt_voice_ip,no-resolve)),AI_EGRESS
+  - AND,((NETWORK,tcp),(DST-PORT,443),(RULE-SET,chatgpt_voice_ip,no-resolve)),REJECT
